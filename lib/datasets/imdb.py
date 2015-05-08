@@ -80,6 +80,10 @@ class imdb(object):
     def default_roidb(self):
         raise NotImplementedError
 
+    def set_proposal_method(self, method):
+        method = eval('self.' + method + '_roidb')
+        self.roidb_handler = method
+
     def evaluate_detections(self, all_boxes, output_dir=None):
         """
         all_boxes is a list of length number-of-classes.
@@ -91,10 +95,13 @@ class imdb(object):
         """
         raise NotImplementedError
 
+    def _get_widths(self):
+      return [PIL.Image.open(self.image_path_at(i)).size[0]
+              for i in xrange(self.num_images)]
+
     def append_flipped_images(self):
         num_images = self.num_images
-        widths = [PIL.Image.open(self.image_path_at(i)).size[0]
-                  for i in xrange(num_images)]
+        widths = self._get_widths()
         for i in xrange(num_images):
             boxes = self.roidb[i]['boxes'].copy()
             oldx1 = boxes[:, 0].copy()
@@ -109,15 +116,42 @@ class imdb(object):
             self.roidb.append(entry)
         self._image_index = self._image_index * 2
 
-    def evaluate_recall(self, candidate_boxes, ar_thresh=0.5):
+    def evaluate_recall(self, candidate_boxes=None, thresholds=None,
+                        area='all'):
+        """Evaluate detection proposal recall metrics.
+
+        Returns:
+            ar: average recall
+            gt_overlaps: vector of all ground-truth overlaps
+            recalls: vector recalls at each IoU overlap threshold
+            thresholds: vector of IoU overlap thresholds
+
+        """
         # Record max overlap value for each gt box
         # Return vector of overlap values
+        areas = { 'all': 0, 'small': 1, 'medium': 2, 'large': 3 }
+        area_ranges = [ [0**2, 1e5**2],  # all
+                        [0**2, 32**2],   # small
+                        [32**2, 96**2],  # medium
+                        [96**2, 1e5**2]  # large
+                      ]
+        assert areas.has_key(area), 'unknown area range: {}'.format(area)
+        area_range = area_ranges[areas[area]]
         gt_overlaps = np.zeros(0)
         for i in xrange(self.num_images):
             gt_inds = np.where(self.roidb[i]['gt_classes'] > 0)[0]
             gt_boxes = self.roidb[i]['boxes'][gt_inds, :]
+            gt_box_areas = ((gt_boxes[:, 2] - gt_boxes[:, 0] + 1) *
+                            (gt_boxes[:, 3] - gt_boxes[:, 1] + 1))
+            valid_gt_inds = np.where((gt_box_areas >= area_range[0]) &
+                                     (gt_box_areas <= area_range[1]))[0]
+            gt_boxes = gt_boxes[valid_gt_inds, :]
 
-            boxes = candidate_boxes[i]
+            if candidate_boxes is None:
+                non_gt_inds = np.where(self.roidb[i]['gt_classes'] == 0)[0]
+                boxes = self.roidb[i]['boxes'][non_gt_inds, :]
+            else:
+                boxes = candidate_boxes[i]
             if boxes.shape[0] == 0:
                 continue
             overlaps = bbox_overlaps(boxes.astype(np.float),
@@ -141,12 +175,14 @@ class imdb(object):
 
         num_pos = gt_overlaps.size
         gt_overlaps = np.sort(gt_overlaps)
-        step = 0.001
-        thresholds = np.minimum(np.arange(0.5, 1.0 + step, step), 1.0)
+        if thresholds is None:
+            step = 0.05
+            thresholds = np.arange(0.5, 0.95 + 1e-5, step)
         recalls = np.zeros_like(thresholds)
         for i, t in enumerate(thresholds):
             recalls[i] = (gt_overlaps >= t).sum() / float(num_pos)
-        ar = 2 * np.trapz(recalls, thresholds)
+        # ar = 2 * np.trapz(recalls, thresholds)
+        ar = recalls.mean()
 
         return ar, gt_overlaps, recalls, thresholds
 
@@ -159,7 +195,7 @@ class imdb(object):
             num_boxes = boxes.shape[0]
             overlaps = np.zeros((num_boxes, self.num_classes), dtype=np.float32)
 
-            if gt_roidb is not None:
+            if gt_roidb is not None and gt_roidb[i]['boxes'].size > 0:
                 gt_boxes = gt_roidb[i]['boxes']
                 gt_classes = gt_roidb[i]['gt_classes']
                 gt_overlaps = bbox_overlaps(boxes.astype(np.float),

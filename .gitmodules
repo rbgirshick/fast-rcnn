@@ -2,3 +2,6 @@
 	path = caffe-fast-rcnn
 	url = https://github.com/rbgirshick/caffe-fast-rcnn.git
 	branch = fast-rcnn
+[submodule "data/cocoAPI"]
+	path = data/cocoAPI
+	url = https://github.com/pdollar/coco.git

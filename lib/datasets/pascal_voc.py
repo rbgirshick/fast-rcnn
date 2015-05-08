@@ -6,7 +6,6 @@
 # --------------------------------------------------------
 
 import datasets
-import datasets.pascal_voc
 import os
 import datasets.imdb
 import xml.dom.minidom as minidom

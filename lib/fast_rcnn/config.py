@@ -78,6 +78,9 @@ __C.TRAIN.SNAPSHOT_INFIX = ''
 # So far I haven't found this useful; likely more engineering work is required
 __C.TRAIN.USE_PREFETCH = False
 
+# Train using these proposals
+__C.TRAIN.PROPOSAL_METHOD = 'selective_search'
+
 #
 # Testing options
 #
@@ -101,6 +104,9 @@ __C.TEST.SVM = False
 
 # Test using bounding-box regressors
 __C.TEST.BBOX_REG = True
+
+# Test using these proposals
+__C.TEST.PROPOSAL_METHOD = 'selective_search'
 
 #
 # MISC

@@ -77,6 +77,8 @@ if __name__ == '__main__':
 
     imdb = get_imdb(args.imdb_name)
     print 'Loaded dataset `{:s}` for training'.format(imdb.name)
+    imdb.set_proposal_method(cfg.TRAIN.PROPOSAL_METHOD)
+
     roidb = get_training_roidb(imdb)
 
     output_dir = get_output_dir(imdb, None)

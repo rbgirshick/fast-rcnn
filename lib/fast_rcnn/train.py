@@ -113,9 +113,34 @@ def get_training_roidb(imdb):
 
     return imdb.roidb
 
+def filter_roidb(roidb):
+    """Remove roidb entries that have no usable RoIs."""
+
+    def is_valid(entry):
+        # Valid images have:
+        #   (1) At least one foreground roi OR
+        #   (2) At least one background roi
+        overlaps = entry['max_overlaps']
+        # find boxes with sufficient overlap
+        fg_inds = np.where(overlaps >= cfg.TRAIN.FG_THRESH)[0]
+        # Select background RoIs as those within [BG_THRESH_LO, BG_THRESH_HI)
+        bg_inds = np.where((overlaps < cfg.TRAIN.BG_THRESH_HI) &
+                           (overlaps >= cfg.TRAIN.BG_THRESH_LO))[0]
+        # image is only valid if such boxes exist
+        valid = len(fg_inds) > 0 or len(bg_inds) > 0
+        return valid
+
+    num = len(roidb)
+    filtered_roidb = [entry for entry in roidb if is_valid(entry)]
+    num_after = len(filtered_roidb)
+    print 'Filtered {} roidb entries: {} -> {}'.format(num - num_after,
+                                                       num, num_after)
+    return filtered_roidb
+
 def train_net(solver_prototxt, roidb, output_dir,
               pretrained_model=None, max_iters=40000):
     """Train a Fast R-CNN network."""
+    roidb = filter_roidb(roidb)
     sw = SolverWrapper(solver_prototxt, roidb, output_dir,
                        pretrained_model=pretrained_model)
 

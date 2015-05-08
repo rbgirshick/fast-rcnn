@@ -3,3 +3,4 @@ imagenet_models*
 fast_rcnn_models*
 VOCdevkit*
 cache
+coco

@@ -41,6 +41,11 @@ def parse_args():
                         default='voc_2007_test', type=str)
     parser.add_argument('--comp', dest='comp_mode', help='competition mode',
                         action='store_true')
+    parser.add_argument('--vis', dest='vis', help='visualize detections',
+                        action='store_true')
+    parser.add_argument('--num_dets', dest='max_per_image',
+                        help='max number of detections per image',
+                        default=100, type=int)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -72,5 +77,6 @@ if __name__ == '__main__':
 
     imdb = get_imdb(args.imdb_name)
     imdb.competition_mode(args.comp_mode)
+    imdb.set_proposal_method(cfg.TEST.PROPOSAL_METHOD)
 
-    test_net(net, imdb)
+    test_net(net, imdb, vis=args.vis, max_per_image=args.max_per_image)

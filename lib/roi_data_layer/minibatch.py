@@ -51,6 +51,10 @@ def get_minibatch(roidb, num_classes):
         bbox_loss_blob = np.vstack((bbox_loss_blob, bbox_loss))
         # all_overlaps = np.hstack((all_overlaps, overlaps))
 
+    num_fg = len(np.where(labels_blob > 0)[0])
+    num_bg = len(np.where(labels_blob == 0)[0])
+    assert num_fg > 0 or num_bg > 0, 'No usable RoIs found'
+
     # For debug visualizations
     # _vis_minibatch(im_blob, rois_blob, labels_blob, all_overlaps)
 
