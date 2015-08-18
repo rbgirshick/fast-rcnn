@@ -98,6 +98,9 @@ def demo(net, image_name, classes):
         cls_ind = CLASSES.index(cls)
         cls_boxes = boxes[:, 4*cls_ind:4*(cls_ind + 1)]
         cls_scores = scores[:, cls_ind]
+        keep = np.where(cls_scores >= CONF_THRESH)[0]
+        cls_boxes = cls_boxes[keep, :]
+        cls_scores = cls_scores[keep]
         dets = np.hstack((cls_boxes,
                           cls_scores[:, np.newaxis])).astype(np.float32)
         keep = nms(dets, NMS_THRESH)
