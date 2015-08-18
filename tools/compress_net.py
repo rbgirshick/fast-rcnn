@@ -19,10 +19,12 @@ def parse_args():
     """Parse input arguments."""
     parser = argparse.ArgumentParser(description='Compress a Fast R-CNN network')
     parser.add_argument('--def', dest='prototxt',
-                        help='prototxt file defining the uncompressed network',
+                        help='prototxt file defining the uncompressed network; '
+                        'e.g., models/VGG16/test.prototxt',
                         default=None, type=str)
     parser.add_argument('--def-svd', dest='prototxt_svd',
-                        help='prototxt file defining the SVD compressed network',
+                        help='prototxt file defining the SVD compressed network '
+                        'e.g., models/VGG16/compressed/test.prototxt',
                         default=None, type=str)
     parser.add_argument('--net', dest='caffemodel',
                         help='model to compress',
@@ -61,12 +63,8 @@ def compress_weights(W, l):
 def main():
     args = parse_args()
 
-    # prototxt = 'models/VGG16/test.prototxt'
-    # caffemodel = 'snapshots/vgg16_fast_rcnn_iter_40000.caffemodel'
     net = caffe.Net(args.prototxt, args.caffemodel, caffe.TEST)
 
-    # prototxt_svd = 'models/VGG16/svd/test_fc6_fc7.prototxt'
-    # caffemodel = 'snapshots/vgg16_fast_rcnn_iter_40000.caffemodel'
     net_svd = caffe.Net(args.prototxt_svd, args.caffemodel, caffe.TEST)
 
     print('Uncompressed network {} : {}'.format(args.prototxt, args.caffemodel))
