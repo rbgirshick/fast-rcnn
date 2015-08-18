@@ -1,0 +1,3 @@
+EXP_DIR: coco_baseline
+TRAIN:
+  SNAPSHOT_ITERS: 20000
