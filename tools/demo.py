@@ -133,7 +133,7 @@ if __name__ == '__main__':
                               NETS[args.demo_net][1])
 
     if not os.path.isfile(caffemodel):
-        raise IOError(('{:s} not found.\nDid you run ./data/script/'
+        raise IOError(('{:s} not found.\nDid you run ./data/scripts/'
                        'fetch_fast_rcnn_models.sh?').format(caffemodel))
 
     if args.cpu_mode:
