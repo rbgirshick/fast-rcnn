@@ -10,7 +10,7 @@ Created by Ross Girshick at Microsoft Research, Redmond.
  - has a significantly higher mAP on PASCAL VOC than both R-CNN and SPPnet,
  - and is written in Python and C++/Caffe.
 
-Fast R-CNN was initially described in an [arXiv tech report](http://arxiv.org/abs/1504.08083).
+Fast R-CNN was initially described in an [arXiv tech report](http://arxiv.org/abs/1504.08083) and later published at ICCV 2015.
 
 ### License
 
@@ -20,10 +20,10 @@ Fast R-CNN is released under the MIT License (refer to the LICENSE file for deta
 
 If you find Fast R-CNN useful in your research, please consider citing:
 
-    @article{girshick15fastrcnn,
+    @inproceedings{girshickICCV15fastrcnn,
         Author = {Ross Girshick},
         Title = {Fast R-CNN},
-        Journal = {arXiv preprint arXiv:1504.08083},
+        Booktitle = {International Conference on Computer Vision ({ICCV})},
         Year = {2015}
     }
     
