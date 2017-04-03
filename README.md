@@ -49,7 +49,7 @@ If you find Fast R-CNN useful in your research, please consider citing:
   WITH_PYTHON_LAYER := 1
   ```
 
-  You can download my [Makefile.config](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/Makefile.config) for reference.
+  You can download my [Makefile.config](https://dl.dropboxusercontent.com/s/6joa55k64xo2h68/Makefile.config?dl=0) for reference.
 2. Python packages you might not have: `cython`, `python-opencv`, `easydict`
 3. [optional] MATLAB (required for PASCAL VOC evaluation only)
 
@@ -246,11 +246,11 @@ Results generated before this commit will have some stochastic variation.
 
 ### Extra downloads
 
-- [Experiment logs](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/fast_rcnn_experiments.tgz)
+- [Experiment logs](https://dl.dropboxusercontent.com/s/q4i9v66xq9vhskl/fast_rcnn_experiments.tgz?dl=0)
 - PASCAL VOC test set detections
-    - [voc_2007_test_results_fast_rcnn_caffenet_trained_on_2007_trainval.tgz](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/voc_2007_test_results_fast_rcnn_caffenet_trained_on_2007_trainval.tgz)
-    - [voc_2007_test_results_fast_rcnn_vgg16_trained_on_2007_trainval.tgz](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/voc_2007_test_results_fast_rcnn_vgg16_trained_on_2007_trainval.tgz)
-    - [voc_2007_test_results_fast_rcnn_vgg_cnn_m_1024_trained_on_2007_trainval.tgz](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/voc_2007_test_results_fast_rcnn_vgg_cnn_m_1024_trained_on_2007_trainval.tgz)
-    - [voc_2012_test_results_fast_rcnn_vgg16_trained_on_2007_trainvaltest_2012_trainval.tgz](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/voc_2012_test_results_fast_rcnn_vgg16_trained_on_2007_trainvaltest_2012_trainval.tgz)
-    - [voc_2012_test_results_fast_rcnn_vgg16_trained_on_2012_trainval.tgz](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/voc_2012_test_results_fast_rcnn_vgg16_trained_on_2012_trainval.tgz)
-- [Fast R-CNN VGG16 model](http://www.cs.berkeley.edu/~rbg/fast-rcnn-data/voc12_submission.tgz) trained on VOC07 train,val,test union with VOC12 train,val
+    - [voc_2007_test_results_fast_rcnn_caffenet_trained_on_2007_trainval.tgz](https://dl.dropboxusercontent.com/s/rkj8ngkoebpltlt/voc_2007_test_results_fast_rcnn_caffenet_trained_on_2007_trainval.tgz?dl=0)
+    - [voc_2007_test_results_fast_rcnn_vgg16_trained_on_2007_trainval.tgz](https://dl.dropboxusercontent.com/s/y8supay93f7dj0i/voc_2007_test_results_fast_rcnn_vgg16_trained_on_2007_trainval.tgz?dl=0)
+    - [voc_2007_test_results_fast_rcnn_vgg_cnn_m_1024_trained_on_2007_trainval.tgz](https://dl.dropboxusercontent.com/s/yiqm42vtvvw60dg/voc_2007_test_results_fast_rcnn_vgg_cnn_m_1024_trained_on_2007_trainval.tgz?dl=0)
+    - [voc_2012_test_results_fast_rcnn_vgg16_trained_on_2007_trainvaltest_2012_trainval.tgz](https://dl.dropboxusercontent.com/s/a3loiewc4f4tnaj/voc_2012_test_results_fast_rcnn_vgg16_trained_on_2007_trainvaltest_2012_trainval.tgz?dl=0)
+    - [voc_2012_test_results_fast_rcnn_vgg16_trained_on_2012_trainval.tgz](https://dl.dropboxusercontent.com/s/7pctvinam6j2nho/voc_2012_test_results_fast_rcnn_vgg16_trained_on_2012_trainval.tgz?dl=0)
+- [Fast R-CNN VGG16 model](https://dl.dropboxusercontent.com/s/53im2gut2jin2qq/voc12_submission.tgz?dl=0) trained on VOC07 train,val,test union with VOC12 train,val
